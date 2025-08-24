@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - EventPro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="calendar" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-800">EventPro</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="dashboard.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        Dashboard
+                    </a>
+                    <a href="create-event.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        Create Event
+                    </a>
+                    <button onclick="logout()" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <h1 class="text-2xl font-bold text-gray-900">Events Created</h1>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Events Overview Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-medium text-gray-500">Total Events</h3>
+                    <i data-lucide="calendar" class="w-4 h-4 text-blue-600"></i>
+                </div>
+                <p class="text-2xl font-bold text-gray-900">12</p>
+                <p class="text-gray-600 text-sm mt-1">All time</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-medium text-gray-500">Live Events</h3>
+                    <i data-lucide="play-circle" class="w-4 h-4 text-green-600"></i>
+                </div>
+                <p class="text-2xl font-bold text-gray-900">3</p>
+                <p class="text-green-600 text-sm mt-1">Currently active</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-medium text-gray-500">Upcoming</h3>
+                    <i data-lucide="clock" class="w-4 h-4 text-orange-600"></i>
+                </div>
+                <p class="text-2xl font-bold text-gray-900">5</p>
+                <p class="text-orange-600 text-sm mt-1">Scheduled</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-medium text-gray-500">Completed</h3>
+                    <i data-lucide="check-circle" class="w-4 h-4 text-purple-600"></i>
+                </div>
+                <p class="text-2xl font-bold text-gray-900">4</p>
+                <p class="text-purple-600 text-sm mt-1">Finished</p>
+            </div>
+        </div>
+
+        <!-- Create New Event Button -->
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h2 class="text-lg font-semibold text-gray-900">All Events</h2>
+                <p class="text-gray-600">Manage and track your events</p>
+            </div>
+            <a href="create-event.html" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                Create New Event
+            </a>
+        </div>
+
+        <!-- Events Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="events-grid">
+            <!-- Event Card 1 - Live -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="h-48 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                    <i data-lucide="calendar" class="w-16 h-16 text-white"></i>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-lg font-semibold text-gray-900">Tech Conference 2024</h3>
+                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Live</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Annual technology conference featuring the latest innovations</p>
+                    <div class="space-y-2 text-sm text-gray-500 mb-4">
+                        <div class="flex items-center">
+                            <i data-lucide="calendar" class="w-4 h-4 mr-2"></i>
+                            March 15, 2024 • 09:00
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="map-pin" class="w-4 h-4 mr-2"></i>
+                            Convention Center, Jakarta
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="users" class="w-4 h-4 mr-2"></i>
+                            240/500 attendees
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="dollar-sign" class="w-4 h-4 mr-2"></i>
+                            ₹2,50,000 per ticket
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <a href="event-engagement.html?id=1" class="flex-1 bg-blue-600 text-white px-3 py-2 rounded-lg text-sm text-center hover:bg-blue-700">
+                            Manage Live
+                        </a>
+                        <button onclick="endEvent(1)" class="px-3 py-2 bg-red-600 text-white rounded-lg text-sm hover:bg-red-700">
+                            End Event
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 2 - Upcoming -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="h-48 bg-gradient-to-r from-green-500 to-blue-600 flex items-center justify-center">
+                    <i data-lucide="music" class="w-16 h-16 text-white"></i>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-lg font-semibold text-gray-900">Music Festival</h3>
+                        <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Upcoming</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Three-day music festival with international artists</p>
+                    <div class="space-y-2 text-sm text-gray-500 mb-4">
+                        <div class="flex items-center">
+                            <i data-lucide="calendar" class="w-4 h-4 mr-2"></i>
+                            April 20, 2024 • 18:00
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="map-pin" class="w-4 h-4 mr-2"></i>
+                            City Park, Jakarta
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="users" class="w-4 h-4 mr-2"></i>
+                            0/1000 attendees
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="dollar-sign" class="w-4 h-4 mr-2"></i>
+                            ₹4,50,000 per ticket
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="startEvent(2)" class="flex-1 bg-green-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-green-700">
+                            Start Event
+                        </button>
+                        <button onclick="editEvent(2)" class="px-3 py-2 bg-gray-600 text-white rounded-lg text-sm hover:bg-gray-700">
+                            Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 3 - Completed -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="h-48 bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center">
+                    <i data-lucide="graduation-cap" class="w-16 h-16 text-white"></i>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-lg font-semibold text-gray-900">Workshop on Gen AI</h3>
+                        <span class="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">Completed</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Hands-on workshop on generative AI technologies</p>
+                    <div class="space-y-2 text-sm text-gray-500 mb-4">
+                        <div class="flex items-center">
+                            <i data-lucide="calendar" class="w-4 h-4 mr-2"></i>
+                            August 30, 2025 • 20:20
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="map-pin" class="w-4 h-4 mr-2"></i>
+                            MGIT Campus
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="users" class="w-4 h-4 mr-2"></i>
+                            156/200 attendees
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="dollar-sign" class="w-4 h-4 mr-2"></i>
+                            $5 per ticket
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <a href="event-post-analytics.html?id=3" class="flex-1 bg-purple-600 text-white px-3 py-2 rounded-lg text-sm text-center hover:bg-purple-700">
+                            View Analytics
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 4 - Live -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="h-48 bg-gradient-to-r from-orange-500 to-red-600 flex items-center justify-center">
+                    <i data-lucide="mic" class="w-16 h-16 text-white"></i>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-lg font-semibold text-gray-900">Final Concert</h3>
+                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Live</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Grand finale concert with special performances</p>
+                    <div class="space-y-2 text-sm text-gray-500 mb-4">
+                        <div class="flex items-center">
+                            <i data-lucide="calendar" class="w-4 h-4 mr-2"></i>
+                            August 30, 2025 • 20:00
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="map-pin" class="w-4 h-4 mr-2"></i>
+                            MGIT Campus
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="users" class="w-4 h-4 mr-2"></i>
+                            89/100 attendees
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="dollar-sign" class="w-4 h-4 mr-2"></i>
+                            $10 per ticket
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <a href="event-engagement.html?id=4" class="flex-1 bg-blue-600 text-white px-3 py-2 rounded-lg text-sm text-center hover:bg-blue-700">
+                            Manage Live
+                        </a>
+                        <button onclick="endEvent(4)" class="px-3 py-2 bg-red-600 text-white rounded-lg text-sm hover:bg-red-700">
+                            End Event
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 5 - Upcoming -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="h-48 bg-gradient-to-r from-teal-500 to-cyan-600 flex items-center justify-center">
+                    <i data-lucide="briefcase" class="w-16 h-16 text-white"></i>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-lg font-semibold text-gray-900">Business Summit</h3>
+                        <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Upcoming</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Annual business leadership summit</p>
+                    <div class="space-y-2 text-sm text-gray-500 mb-4">
+                        <div class="flex items-center">
+                            <i data-lucide="calendar" class="w-4 h-4 mr-2"></i>
+                            September 15, 2025 • 09:00
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="map-pin" class="w-4 h-4 mr-2"></i>
+                            Business Center
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="users" class="w-4 h-4 mr-2"></i>
+                            0/300 attendees
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="dollar-sign" class="w-4 h-4 mr-2"></i>
+                            $50 per ticket
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="startEvent(5)" class="flex-1 bg-green-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-green-700">
+                            Start Event
+                        </button>
+                        <button onclick="editEvent(5)" class="px-3 py-2 bg-gray-600 text-white rounded-lg text-sm hover:bg-gray-700">
+                            Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 6 - Completed -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="h-48 bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center">
+                    <i data-lucide="users" class="w-16 h-16 text-white"></i>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-lg font-semibold text-gray-900">Networking Event</h3>
+                        <span class="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">Completed</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Professional networking and collaboration event</p>
+                    <div class="space-y-2 text-sm text-gray-500 mb-4">
+                        <div class="flex items-center">
+                            <i data-lucide="calendar" class="w-4 h-4 mr-2"></i>
+                            August 20, 2025 • 19:00
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="map-pin" class="w-4 h-4 mr-2"></i>
+                            Hotel Grand
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="users" class="w-4 h-4 mr-2"></i>
+                            78/150 attendees
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="dollar-sign" class="w-4 h-4 mr-2"></i>
+                            $25 per ticket
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <a href="event-post-analytics.html?id=6" class="flex-1 bg-purple-600 text-white px-3 py-2 rounded-lg text-sm text-center hover:bg-purple-700">
+                            View Analytics
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        function logout() {
+            localStorage.removeItem('eventpro_logged_in');
+            localStorage.removeItem('eventpro_demo_mode');
+            window.location.href = 'index.html';
+        }
+
+        function startEvent(eventId) {
+            alert(`Event ${eventId} started! Redirecting to live management...`);
+            window.location.href = `event-engagement.html?id=${eventId}`;
+        }
+
+        function endEvent(eventId) {
+            if (confirm(`Are you sure you want to end Event ${eventId}?`)) {
+                alert(`Event ${eventId} ended! Redirecting to analytics...`);
+                window.location.href = `event-post-analytics.html?id=${eventId}`;
+            }
+        }
+
+        function editEvent(eventId) {
+            alert(`Editing Event ${eventId}...`);
+            window.location.href = `create-event.html?edit=${eventId}`;
+        }
+
+        // Check if user is logged in
+        if (!localStorage.getItem('eventpro_logged_in')) {
+            // Set logged in state for demo purposes
+            localStorage.setItem('eventpro_logged_in', 'true');
+        }
+    </script>
+</body>
+</html>

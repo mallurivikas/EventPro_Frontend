@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event - EventPro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="calendar" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-800">EventPro</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="dashboard.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        Dashboard
+                    </a>
+                    <a href="events.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        Events
+                    </a>
+                    <button onclick="logout()" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <h1 class="text-2xl font-bold text-gray-900">Create New Event</h1>
+            <p class="text-gray-600 mt-2">Set up your event with all the necessary details</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+            <form onsubmit="createEvent(event)" class="space-y-6">
+                <!-- Event Title -->
+                <div>
+                    <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Event Title *</label>
+                    <input type="text" id="title" name="title" required
+                           placeholder="Enter event title..."
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+
+                <!-- Event Description -->
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
+                    <textarea id="description" name="description" required rows="4"
+                              placeholder="Describe your event..."
+                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                </div>
+
+                <!-- Date and Time -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="date" class="block text-sm font-medium text-gray-700 mb-2">Event Date *</label>
+                        <input type="date" id="date" name="date" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="time" class="block text-sm font-medium text-gray-700 mb-2">Event Time *</label>
+                        <input type="time" id="time" name="time" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div>
+                    <label for="location" class="block text-sm font-medium text-gray-700 mb-2">Location *</label>
+                    <input type="text" id="location" name="location" required
+                           placeholder="Enter event location..."
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+
+                <!-- Capacity and Pricing -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="capacity" class="block text-sm font-medium text-gray-700 mb-2">Capacity *</label>
+                        <input type="number" id="capacity" name="capacity" required min="1"
+                               placeholder="500"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="ticketPrice" class="block text-sm font-medium text-gray-700 mb-2">Ticket Price *</label>
+                        <input type="number" id="ticketPrice" name="ticketPrice" required min="0" step="0.01"
+                               placeholder="250000"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="currency" class="block text-sm font-medium text-gray-700 mb-2">Currency *</label>
+                        <select id="currency" name="currency" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="INR">INR (₹)</option>
+                            <option value="USD">USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="GBP">GBP (£)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Event Image URL -->
+                <div>
+                    <label for="image" class="block text-sm font-medium text-gray-700 mb-2">Event Image URL (Optional)</label>
+                    <input type="url" id="image" name="image"
+                           placeholder="https://example.com/image.jpg"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <p class="text-sm text-gray-500 mt-1">Add a URL to an image that represents your event</p>
+                </div>
+
+                <!-- Event Category -->
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-700 mb-2">Event Category</label>
+                    <select id="category" name="category"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="conference">Conference</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="seminar">Seminar</option>
+                        <option value="concert">Concert</option>
+                        <option value="festival">Festival</option>
+                        <option value="networking">Networking</option>
+                        <option value="training">Training</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Event Tags -->
+                <div>
+                    <label for="tags" class="block text-sm font-medium text-gray-700 mb-2">Tags (Optional)</label>
+                    <input type="text" id="tags" name="tags"
+                           placeholder="technology, innovation, AI, conference"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <p class="text-sm text-gray-500 mt-1">Separate tags with commas</p>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="border-t pt-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Event Preview</h3>
+                    <div id="eventPreview" class="bg-gray-50 rounded-lg p-6">
+                        <div class="border border-gray-200 rounded-lg p-4 bg-white">
+                            <div class="flex items-start justify-between mb-3">
+                                <h4 class="font-semibold text-gray-900" id="previewTitle">Event Title</h4>
+                                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Upcoming</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3" id="previewDescription">Event description will appear here...</p>
+                            <div class="space-y-1 text-sm text-gray-500">
+                                <div class="flex items-center">
+                                    <i data-lucide="calendar" class="w-4 h-4 mr-2"></i>
+                                    <span id="previewDateTime">Date & Time</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i data-lucide="map-pin" class="w-4 h-4 mr-2"></i>
+                                    <span id="previewLocation">Location</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i data-lucide="users" class="w-4 h-4 mr-2"></i>
+                                    <span id="previewCapacity">0/0 attendees</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i data-lucide="dollar-sign" class="w-4 h-4 mr-2"></i>
+                                    <span id="previewPrice">Price per ticket</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="flex justify-between pt-6 border-t">
+                    <a href="events.html" class="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
+                        Cancel
+                    </a>
+                    <div class="space-x-3">
+                        <button type="button" onclick="saveDraft()" class="px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors">
+                            Save Draft
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Create Event
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        function logout() {
+            localStorage.removeItem('eventpro_logged_in');
+            localStorage.removeItem('eventpro_demo_mode');
+            window.location.href = 'index.html';
+        }
+
+        // Live preview updates
+        function updatePreview() {
+            const title = document.getElementById('title').value || 'Event Title';
+            const description = document.getElementById('description').value || 'Event description will appear here...';
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const location = document.getElementById('location').value || 'Location';
+            const capacity = document.getElementById('capacity').value || '0';
+            const ticketPrice = document.getElementById('ticketPrice').value || '0';
+            const currency = document.getElementById('currency').value;
+
+            document.getElementById('previewTitle').textContent = title;
+            document.getElementById('previewDescription').textContent = description;
+            document.getElementById('previewLocation').textContent = location;
+            document.getElementById('previewCapacity').textContent = `0/${capacity} attendees`;
+            
+            if (date && time) {
+                const dateObj = new Date(date + 'T' + time);
+                document.getElementById('previewDateTime').textContent = dateObj.toLocaleDateString() + ' • ' + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            } else {
+                document.getElementById('previewDateTime').textContent = 'Date & Time';
+            }
+
+            const currencySymbol = currency === 'INR' ? '₹' : currency === 'USD' ? '$' : currency === 'EUR' ? '€' : '£';
+            document.getElementById('previewPrice').textContent = `${currencySymbol}${parseFloat(ticketPrice).toLocaleString()} per ticket`;
+        }
+
+        // Add event listeners for live preview
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = ['title', 'description', 'date', 'time', 'location', 'capacity', 'ticketPrice', 'currency'];
+            inputs.forEach(id => {
+                document.getElementById(id).addEventListener('input', updatePreview);
+            });
+            
+            // Set default date to today
+            document.getElementById('date').value = new Date().toISOString().split('T')[0];
+            updatePreview();
+        });
+
+        function createEvent(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const eventData = Object.fromEntries(formData.entries());
+            
+            // Simulate event creation
+            const eventId = Math.floor(Math.random() * 1000) + 1;
+            
+            // Show success message
+            alert(`Event "${eventData.title}" created successfully!\nEvent ID: ${eventId}`);
+            
+            // Redirect to events page
+            window.location.href = 'events.html';
+        }
+
+        function saveDraft() {
+            // Get form data
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            
+            if (!title && !description) {
+                alert('Please fill in at least the title or description to save a draft.');
+                return;
+            }
+            
+            // Simulate saving draft
+            alert('Draft saved successfully! You can continue editing later.');
+        }
+
+        // Check if user is logged in
+        if (!localStorage.getItem('eventpro_logged_in')) {
+            // Set logged in state for demo purposes
+            localStorage.setItem('eventpro_logged_in', 'true');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Engagement - EventPro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="calendar" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-800">EventPro</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="events.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        All Events
+                    </a>
+                    <a href="event-post-analytics.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        Post-Event
+                    </a>
+                    <button onclick="logout()" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">🎤 Live Event Engagement</h1>
+                    <p class="text-gray-600 mt-1">Tech Conference 2024 - Manage live interactions</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full font-medium flex items-center">
+                        <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                        Live
+                    </span>
+                    <button onclick="endEvent()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                        End Event
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Live Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-medium text-gray-500">Live Attendees</h3>
+                    <i data-lucide="users" class="w-4 h-4 text-blue-600"></i>
+                </div>
+                <p class="text-2xl font-bold text-gray-900" id="liveAttendees">245</p>
+                <p class="text-blue-600 text-sm mt-1">Currently watching</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-medium text-gray-500">Active Polls</h3>
+                    <i data-lucide="bar-chart-3" class="w-4 h-4 text-green-600"></i>
+                </div>
+                <p class="text-2xl font-bold text-gray-900" id="activePolls">3</p>
+                <p class="text-green-600 text-sm mt-1">Running now</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-medium text-gray-500">Q&A Questions</h3>
+                    <i data-lucide="message-square" class="w-4 h-4 text-orange-600"></i>
+                </div>
+                <p class="text-2xl font-bold text-gray-900" id="qaQuestions">17</p>
+                <p class="text-orange-600 text-sm mt-1">Pending: 5</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-medium text-gray-500">Engagement Rate</h3>
+                    <i data-lucide="zap" class="w-4 h-4 text-purple-600"></i>
+                </div>
+                <p class="text-2xl font-bold text-gray-900" id="engagementRate">78%</p>
+                <p class="text-purple-600 text-sm mt-1">Very active</p>
+            </div>
+        </div>
+
+        <!-- Control Tabs -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 mb-8">
+            <div class="border-b border-gray-200">
+                <nav class="flex space-x-8 px-6">
+                    <button onclick="showTab('polls')" id="polls-tab" class="tab-button py-4 text-sm font-medium border-b-2 border-blue-600 text-blue-600">
+                        📊 Polls Management
+                    </button>
+                    <button onclick="showTab('qa')" id="qa-tab" class="tab-button py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                        ❓ Q&A Management
+                    </button>
+                    <button onclick="showTab('analytics')" id="analytics-tab" class="tab-button py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                        📈 Live Analytics
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Polls Management Tab -->
+            <div id="polls-content" class="tab-content p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Create New Poll -->
+                    <div class="space-y-4">
+                        <h4 class="font-medium text-gray-900">Create New Poll</h4>
+                        <div class="space-y-3">
+                            <input
+                                type="text"
+                                id="poll-question"
+                                placeholder="Enter poll question..."
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <div class="grid grid-cols-2 gap-2">
+                                <input type="text" id="poll-option1" placeholder="Option 1" class="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                <input type="text" id="poll-option2" placeholder="Option 2" class="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                <input type="text" id="poll-option3" placeholder="Option 3 (optional)" class="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                <input type="text" id="poll-option4" placeholder="Option 4 (optional)" class="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                            </div>
+                            <button onclick="createPoll()" class="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                <span>Create Poll</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Poll Templates -->
+                    <div class="space-y-4">
+                        <h4 class="font-medium text-gray-900">Quick Poll Templates</h4>
+                        <div class="space-y-2">
+                            <button onclick="createQuickPoll('satisfaction')" class="w-full text-left px-3 py-2 border border-gray-200 rounded-lg hover:bg-gray-50">📊 Event Satisfaction (1-5 scale)</button>
+                            <button onclick="createQuickPoll('recommendation')" class="w-full text-left px-3 py-2 border border-gray-200 rounded-lg hover:bg-gray-50">👍 Would you recommend this event?</button>
+                            <button onclick="createQuickPoll('session')" class="w-full text-left px-3 py-2 border border-gray-200 rounded-lg hover:bg-gray-50">🎯 Which session was most valuable?</button>
+                            <button onclick="createQuickPoll('networking')" class="w-full text-left px-3 py-2 border border-gray-200 rounded-lg hover:bg-gray-50">🤝 How was the networking opportunity?</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Polls List -->
+                <div class="mt-8">
+                    <h4 class="font-medium text-gray-900 mb-4">Active Polls</h4>
+                    <div id="polls-list" class="space-y-4">
+                        <!-- Demo polls will be added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q&A Management Tab -->
+            <div id="qa-content" class="tab-content hidden p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Q&A Controls -->
+                    <div class="space-y-4">
+                        <h4 class="font-medium text-gray-900">Q&A Session Controls</h4>
+                        <div class="space-y-3">
+                            <button onclick="toggleQA()" id="qa-toggle" class="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                                <i data-lucide="play" class="w-4 h-4"></i>
+                                <span>Start Q&A Session</span>
+                            </button>
+                            <div class="flex space-x-2">
+                                <button onclick="moderateQuestions()" class="flex-1 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700">
+                                    Moderate Questions
+                                </button>
+                                <button onclick="exportQA()" class="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+                                    Export Q&A
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question Statistics -->
+                    <div class="space-y-4">
+                        <h4 class="font-medium text-gray-900">Question Statistics</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <div class="text-2xl font-bold text-gray-900">17</div>
+                                <div class="text-sm text-gray-600">Total Questions</div>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <div class="text-2xl font-bold text-green-600">12</div>
+                                <div class="text-sm text-gray-600">Answered</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Questions List -->
+                <div class="mt-8">
+                    <h4 class="font-medium text-gray-900 mb-4">Recent Questions</h4>
+                    <div id="questions-list" class="space-y-4">
+                        <!-- Demo questions will be added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Analytics Tab -->
+            <div id="analytics-content" class="tab-content hidden p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Engagement Chart -->
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-4">Live Engagement</h4>
+                        <div class="h-64">
+                            <canvas id="engagementChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Attendance Chart -->
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-4">Attendance Trend</h4>
+                        <div class="h-64">
+                            <canvas id="attendanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real-time Metrics -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="text-lg font-semibold text-blue-900">Poll Participation</div>
+                        <div class="text-2xl font-bold text-blue-600">89%</div>
+                        <div class="text-sm text-blue-700">Average response rate</div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="text-lg font-semibold text-green-900">Q&A Engagement</div>
+                        <div class="text-2xl font-bold text-green-600">17</div>
+                        <div class="text-sm text-green-700">Questions submitted</div>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <div class="text-lg font-semibold text-purple-900">Session Duration</div>
+                        <div class="text-2xl font-bold text-purple-600">2.5h</div>
+                        <div class="text-sm text-purple-700">Since event started</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        let activePolls = [];
+        let questions = [];
+        let isQAActive = false;
+
+        // Tab management
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Remove active state from all tabs
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('border-blue-600', 'text-blue-600');
+                button.classList.add('border-transparent', 'text-gray-500');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabName + '-content').classList.remove('hidden');
+
+            // Add active state to selected tab
+            const activeTab = document.getElementById(tabName + '-tab');
+            activeTab.classList.add('border-blue-600', 'text-blue-600');
+            activeTab.classList.remove('border-transparent', 'text-gray-500');
+
+            // Initialize charts if analytics tab is selected
+            if (tabName === 'analytics') {
+                setTimeout(initCharts, 100);
+            }
+        }
+
+        // Poll management
+        function createPoll() {
+            const question = document.getElementById('poll-question').value.trim();
+            const option1 = document.getElementById('poll-option1').value.trim();
+            const option2 = document.getElementById('poll-option2').value.trim();
+            const option3 = document.getElementById('poll-option3').value.trim();
+            const option4 = document.getElementById('poll-option4').value.trim();
+
+            if (!question || !option1 || !option2) {
+                alert('Please enter a question and at least 2 options');
+                return;
+            }
+
+            const options = [option1, option2];
+            if (option3) options.push(option3);
+            if (option4) options.push(option4);
+
+            const poll = {
+                id: Date.now(),
+                question,
+                options,
+                votes: new Array(options.length).fill(0),
+                isActive: true
+            };
+
+            activePolls.push(poll);
+            renderPolls();
+            clearPollForm();
+            updateStats();
+
+            alert('Poll created successfully!');
+        }
+
+        function createQuickPoll(type) {
+            let question, options;
+            
+            switch(type) {
+                case 'satisfaction':
+                    question = 'How satisfied are you with this event?';
+                    options = ['Very Unsatisfied', 'Unsatisfied', 'Neutral', 'Satisfied', 'Very Satisfied'];
+                    break;
+                case 'recommendation':
+                    question = 'Would you recommend this event to others?';
+                    options = ['Definitely No', 'Probably No', 'Not Sure', 'Probably Yes', 'Definitely Yes'];
+                    break;
+                case 'session':
+                    question = 'Which session was most valuable to you?';
+                    options = ['Keynote Speech', 'Panel Discussion', 'Workshop', 'Networking Session'];
+                    break;
+                case 'networking':
+                    question = 'How would you rate the networking opportunities?';
+                    options = ['Poor', 'Fair', 'Good', 'Excellent'];
+                    break;
+            }
+
+            const poll = {
+                id: Date.now(),
+                question,
+                options,
+                votes: new Array(options.length).fill(0),
+                isActive: true
+            };
+
+            activePolls.push(poll);
+            renderPolls();
+            updateStats();
+
+            alert(`Quick poll "${question}" created successfully!`);
+        }
+
+        function renderPolls() {
+            const pollsList = document.getElementById('polls-list');
+            pollsList.innerHTML = '';
+
+            activePolls.forEach(poll => {
+                const totalVotes = poll.votes.reduce((sum, votes) => sum + votes, 0);
+                
+                const pollElement = document.createElement('div');
+                pollElement.className = 'border border-gray-200 rounded-lg p-4';
+                pollElement.innerHTML = `
+                    <div class="flex items-start justify-between mb-3">
+                        <h5 class="font-medium text-gray-900">${poll.question}</h5>
+                        <div class="flex space-x-2">
+                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Active</span>
+                            <button onclick="endPoll(${poll.id})" class="text-red-600 hover:text-red-800">
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        ${poll.options.map((option, index) => {
+                            const percentage = totalVotes > 0 ? Math.round((poll.votes[index] / totalVotes) * 100) : 0;
+                            return `
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">${option}</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-20 bg-gray-200 rounded-full h-2">
+                                            <div class="bg-blue-600 h-2 rounded-full" style="width: ${percentage}%"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">${poll.votes[index]} (${percentage}%)</span>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    <div class="mt-3 text-sm text-gray-500">Total votes: ${totalVotes}</div>
+                `;
+
+                pollsList.appendChild(pollElement);
+            });
+
+            // Re-initialize Lucide icons
+            lucide.createIcons();
+        }
+
+        function clearPollForm() {
+            document.getElementById('poll-question').value = '';
+            document.getElementById('poll-option1').value = '';
+            document.getElementById('poll-option2').value = '';
+            document.getElementById('poll-option3').value = '';
+            document.getElementById('poll-option4').value = '';
+        }
+
+        function endPoll(pollId) {
+            activePolls = activePolls.filter(poll => poll.id !== pollId);
+            renderPolls();
+            updateStats();
+        }
+
+        // Q&A management
+        function toggleQA() {
+            isQAActive = !isQAActive;
+            const button = document.getElementById('qa-toggle');
+            const icon = button.querySelector('i');
+            const text = button.querySelector('span');
+
+            if (isQAActive) {
+                button.className = 'w-full flex items-center justify-center space-x-2 px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700';
+                icon.setAttribute('data-lucide', 'stop');
+                text.textContent = 'Stop Q&A Session';
+            } else {
+                button.className = 'w-full flex items-center justify-center space-x-2 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700';
+                icon.setAttribute('data-lucide', 'play');
+                text.textContent = 'Start Q&A Session';
+            }
+
+            lucide.createIcons();
+        }
+
+        function moderateQuestions() {
+            alert('Opening question moderation panel...');
+        }
+
+        function exportQA() {
+            alert('Exporting Q&A data...');
+        }
+
+        // Statistics update
+        function updateStats() {
+            document.getElementById('activePolls').textContent = activePolls.length;
+            
+            // Simulate live updates
+            setInterval(() => {
+                const attendees = 240 + Math.floor(Math.random() * 10) - 5;
+                document.getElementById('liveAttendees').textContent = attendees;
+                
+                const engagement = 75 + Math.floor(Math.random() * 10);
+                document.getElementById('engagementRate').textContent = engagement + '%';
+            }, 3000);
+        }
+
+        // Charts initialization
+        function initCharts() {
+            const engagementCtx = document.getElementById('engagementChart').getContext('2d');
+            const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
+
+            new Chart(engagementCtx, {
+                type: 'line',
+                data: {
+                    labels: ['10:00', '10:30', '11:00', '11:30', '12:00', '12:30'],
+                    datasets: [{
+                        label: 'Engagement Rate',
+                        data: [65, 72, 78, 85, 79, 82],
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            new Chart(attendanceCtx, {
+                type: 'line',
+                data: {
+                    labels: ['10:00', '10:30', '11:00', '11:30', '12:00', '12:30'],
+                    datasets: [{
+                        label: 'Live Attendees',
+                        data: [180, 210, 235, 245, 240, 245],
+                        borderColor: 'rgb(34, 197, 94)',
+                        backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function endEvent() {
+            if (confirm('Are you sure you want to end this event?')) {
+                alert('Event ended successfully! Redirecting to post-event analytics...');
+                window.location.href = 'event-post-analytics.html';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('eventpro_logged_in');
+            localStorage.removeItem('eventpro_demo_mode');
+            window.location.href = 'index.html';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            
+            // Add some demo polls
+            setTimeout(() => {
+                createQuickPoll('satisfaction');
+                createQuickPoll('recommendation');
+            }, 1000);
+        });
+
+        // Check if user is logged in
+        if (!localStorage.getItem('eventpro_logged_in')) {
+            // Set logged in state for demo purposes
+            localStorage.setItem('eventpro_logged_in', 'true');
+        }
+    </script>
+</body>
+</html>

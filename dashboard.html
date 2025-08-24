@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - EventPro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="calendar" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-800">EventPro</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="events.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        Events
+                    </a>
+                    <a href="create-event.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        Create Event
+                    </a>
+                    <button onclick="logout()" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-medium text-gray-500">Total Events</h3>
+                    <i data-lucide="calendar" class="w-4 h-4 text-blue-600"></i>
+                </div>
+                <p class="text-2xl font-bold text-gray-900">12</p>
+                <p class="text-green-600 text-sm mt-1">+2 this month</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-medium text-gray-500">Active Events</h3>
+                    <i data-lucide="play-circle" class="w-4 h-4 text-green-600"></i>
+                </div>
+                <p class="text-2xl font-bold text-gray-900">3</p>
+                <p class="text-green-600 text-sm mt-1">Live now</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-medium text-gray-500">Total Revenue</h3>
+                    <i data-lucide="dollar-sign" class="w-4 h-4 text-purple-600"></i>
+                </div>
+                <p class="text-2xl font-bold text-gray-900">₹2.4M</p>
+                <p class="text-purple-600 text-sm mt-1">+15% from last month</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-medium text-gray-500">Total Attendees</h3>
+                    <i data-lucide="users" class="w-4 h-4 text-orange-600"></i>
+                </div>
+                <p class="text-2xl font-bold text-gray-900">1,847</p>
+                <p class="text-orange-600 text-sm mt-1">Across all events</p>
+            </div>
+        </div>
+
+        <!-- Recent Events -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-lg font-semibold text-gray-900">Recent Events</h2>
+                <a href="events.html" class="text-blue-600 hover:text-blue-700 text-sm font-medium">View all</a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Event Card 1 -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex items-start justify-between mb-3">
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Tech Conference 2024</h3>
+                            <p class="text-sm text-gray-600">March 15, 2024 • 09:00</p>
+                        </div>
+                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Live</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">Annual technology conference featuring the latest innovations</p>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-500">240/500 attendees</span>
+                        <a href="event-engagement.html?id=1" class="text-blue-600 hover:text-blue-700">Manage →</a>
+                    </div>
+                </div>
+
+                <!-- Event Card 2 -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex items-start justify-between mb-3">
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Music Festival</h3>
+                            <p class="text-sm text-gray-600">April 20, 2024 • 18:00</p>
+                        </div>
+                        <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Upcoming</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">Three-day music festival with international artists</p>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-500">0/1000 attendees</span>
+                        <a href="event-engagement.html?id=2" class="text-blue-600 hover:text-blue-700">Manage →</a>
+                    </div>
+                </div>
+
+                <!-- Event Card 3 -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex items-start justify-between mb-3">
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Workshop on Gen AI</h3>
+                            <p class="text-sm text-gray-600">August 30, 2025 • 20:20</p>
+                        </div>
+                        <span class="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">Completed</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">Hands-on workshop on generative AI technologies</p>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-500">156/200 attendees</span>
+                        <a href="event-post-analytics.html?id=3" class="text-blue-600 hover:text-blue-700">View Analytics →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 text-center">
+                <a href="create-event.html" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                    Create New Event
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        function logout() {
+            localStorage.removeItem('eventpro_logged_in');
+            localStorage.removeItem('eventpro_demo_mode');
+            window.location.href = 'index.html';
+        }
+
+        // Check if user is logged in
+        if (!localStorage.getItem('eventpro_logged_in')) {
+            // Set logged in state for demo purposes
+            localStorage.setItem('eventpro_logged_in', 'true');
+        }
+    </script>
+</body>
+</html>
